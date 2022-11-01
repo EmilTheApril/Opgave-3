@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float speed;
+    public float thrust;
 
     private Rigidbody2D rb;
     private Animator anim;
@@ -47,6 +48,15 @@ public class PlayerMovement : MonoBehaviour
 
             //Sets isWalking to false, swithing to idle animation
             anim.SetBool("isWalking", false);
+        }
+    }
+
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("JumpBoost"))
+        {
+            rb.AddForce(Vector2.up * thrust, ForceMode2D.Impulse);
+            Destroy(other.gameObject);
         }
     }
 }
