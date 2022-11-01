@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         //Sets the animator to the first childs animator
-        anim = transform.GetChild(0).GetComponent<Animator>();
+        anim = GetComponent<Animator>();
     }
 
     void FixedUpdate()
@@ -53,9 +53,13 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D other)
     {
+        //Checks if the object it collides with has the tag "JumpBoost"
         if (other.gameObject.CompareTag("JumpBoost"))
         {
+            //Adds an upwards force
             rb.AddForce(Vector2.up * thrust, ForceMode2D.Impulse);
+
+            //Destroys the object the player collides with that has the tag
             Destroy(other.gameObject);
         }
     }
